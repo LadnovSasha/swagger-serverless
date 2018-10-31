@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "es6",
+      "lib": [
+        "es6"
+      ],
+      "declaration": true,
+      "moduleResolution": "node",
+      "outDir": "./dist",
+      "sourceMap": false,
+      "allowJs": false,
+      "noImplicitAny": true,
+      "noUnusedLocals": true,
+      "noImplicitThis": true,
+      "strictNullChecks": true,
+      "noImplicitReturns": true,
+      "preserveConstEnums": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "allowSyntheticDefaultImports": false
+    },
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "node_modules",
+      "coverage"
+    ]
+  }

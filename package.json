@@ -1,0 +1,31 @@
+{
+  "name": "swagger-serverless",
+  "version": "0.1.0",
+  "description": "Transforms swagger openapi.yml to the compatible serverless format",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LadnovSasha/swagger-serverless.git"
+  },
+  "keywords": [
+    "swagger",
+    "serverless",
+    "documentation"
+  ],
+  "author": "oladnov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LadnovSasha/swagger-serverless/issues"
+  },
+  "homepage": "https://github.com/LadnovSasha/swagger-serverless#readme",
+  "devDependencies": {
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "typescript": "^3.1.4"
+  }
+}
