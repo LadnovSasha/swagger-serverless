@@ -1,5 +1,6 @@
-const { safeLoad } = require('js-yaml');
-const { readFileSync } = require('fs');
+const { safeLoad, safeDump } = require('js-yaml');
+const { readFileSync, writeFileSync } = require('fs');
+const TransformOpenApi = require('./transform');
 
 function upload(path) {
   const doc = readFileSync(path, 'utf-8');
@@ -7,45 +8,14 @@ function upload(path) {
   return safeLoad(doc);
 }
 
-function process(path) {
-  const { components } = upload(path);
-  transformSchemas(components.schemas);
+function process(path, out) {
+  const doc = upload(path);
+  const transform = new TransformOpenApi(doc.components);
+
+  const transformedObject = transform.transformComponent();
+  const dump = safeDump(Object.assign(doc, { components: transformedObject }), { noRefs: true });
+
+  writeFileSync(out, dump);
 }
 
-const schemaRegexp = /^#\/components\/schemas\/(\w+)$/;
-
-function transformSchemas(schemas) {
-  const workSchemas = Object.assign({}, schemas);
-
-  const transform = (data) => {
-    let responseData = Object.assign({}, data);
-
-    Object.keys(data).forEach((key) => {
-      if (typeof data[key] === 'object') {
-        responseData[key] = transform(data[key]);
-        return;
-      }
-
-      if (key === 'example') {
-        delete responseData[key];
-      }
-
-      if (key === '$ref') {
-        const result = schemaRegexp.exec(data[key]);
-        if (!result) {
-          throw new Error(`Failed to parse reference ${data[key]}`);
-        }
-
-        responseData = workSchemas[result[1]];
-        return;
-      }
-    });
-
-    return responseData;
-  };
-
-  const respons = transform(workSchemas);
-  return workSchemas;
-}
-
-process('mock/v3.0/openapi_v2.yml');
+module.exports = process;
